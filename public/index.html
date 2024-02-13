@@ -4,12 +4,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/styles.css">
     <title>Mijn Todo Applicatie</title>
 </head>
 
 <body>
-    <p>Dit is mijn applicatie</p>
+    <header>
+        <div class="logo">
+            <img src="./images/logo.png" alt="Logo">
+            <h1>Just Do IT</h1>
+        </div>
+        <button type="button">Logout</button>
+    </header>
+
+    <main>
+
+        <aside>
+            <h2>Categories</h2>
+            <ul>
+                <li class="active"><a href="#">Default</a></li>
+                <li><a href="#">Household</a></li>
+            </ul>
+        </aside>
+
+        <div class="content">
+            <article class="todos--unchecked__container">
+                <h2>We've got things to do!</h2>
+                <form class="add-todo">
+                    <input type="text" placeholder="What is your task?">
+                    <button type="submit">+</button>
+                </form>
+
+                <ul class="todos--unchecked">
+                    <li class="todo-item">
+                        <button class="done">Done!</button>
+                        <p class="todo">Do the dishes</p>
+                        <button class="delete">Delete</button>
+                        <button class="edit">Edit</button>
+                    </li>
+                    <li class="todo-item">
+                        <button class="done">Done!</button>
+                        <p class="todo">Do the dishes</p>
+                        <button class="delete">Delete</button>
+                        <button class="edit">Edit</button>
+                    </li>
+                </ul>
+            </article>
+
+            <article class="todos-checked__container">
+                <h2>Things you've done!</h2>
+                <ul class="todos-checked">
+                    <li class="todo-item">
+                        <button class="done">Done!</button>
+                        <p class="todo">Doing some homework</p>
+                        <button class="delete">Delete</button>
+                        <button class="edit">Edit</button>
+                    </li>
+                </ul>
+            </article>
+        </div>
+
+    </main>
+    
 </body>
 
 </html>
