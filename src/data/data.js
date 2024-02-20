@@ -94,5 +94,5 @@ export const home = (req, res) => {
         }
     ];
     
-    res.json(data);
+    res.render("home", data);
 };
