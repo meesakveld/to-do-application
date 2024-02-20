@@ -1,0 +1,10 @@
+<li class="todo-item">
+    {{#unless isCompleted}}
+        <button class="done">Done!</button>
+    {{/unless}}
+    <p class="todo">{{title}}</p>
+    <button class="delete">Delete</button>
+    {{#unless isCompleted}}
+        <button class="edit">Edit</button>
+    {{/unless}}
+</li>
