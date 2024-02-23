@@ -28,6 +28,7 @@ ul {
 a {
     text-decoration: none;
     color: inherit;
+    padding: 0 0.5rem;
 }
 
 button {
@@ -64,7 +65,7 @@ aside, .content {
 aside {
     ul li.active {
         background-color: rgb(100 56 198);
-        padding: 0.25rem 0.5rem;
+        padding: 0.25rem 0;
     }
 }
 
