@@ -114,6 +114,10 @@ main {
     }
 }
 
+.todos--unchecked, .todos-checked {
+    container-type: inline-size;
+}
+
 .todo-item {
     display: flex;
     flex-direction: row;
@@ -138,6 +142,20 @@ main {
 
     & .edit {
         background-color: rgb(100 56 198);
+    }
+
+    @container (width < 25rem) {
+        flex-wrap: wrap;
+        
+        & .todo {
+            flex-basis: 100%;
+            order: -1;
+            padding: 0.5rem;
+        }
+
+        & .done, .delete, .edit {
+            flex-grow: 1;
+        }
     }
 }
 
