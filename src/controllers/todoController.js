@@ -6,7 +6,7 @@ export const todos = (req, res) => {
     const data = {
         todos: todosData,
         categories: filterUniqueCategoriesFromTodos(todosData),
-        activeCategory: "All"
+        activeCategory: "all"
     }
     
     res.render("home", data)
@@ -16,7 +16,7 @@ export const categorizedTodos = (req, res) => {
     
     const category = req.params.category;
     const data = {
-        todos: category === "All" ? todosData : todosData.filter(todo => todo.category.toLowerCase() === category.toLowerCase()),
+        todos: category === "all" ? todosData : todosData.filter(todo => todo.category.toLowerCase() === category.toLowerCase()),
         categories: filterUniqueCategoriesFromTodos(todosData),
         activeCategory: category
     }
