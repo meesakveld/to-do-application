@@ -1,6 +1,6 @@
 
 export default {
-    filterUncheckedTodos: (todos, param) => {
+    filterTodosByStatus: (todos, param) => {
         if(param.hash.isChecked) {
             return todos.filter(todo => todo.isCompleted);
         } else {
