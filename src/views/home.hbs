@@ -12,7 +12,7 @@
         <h2>Categories</h2>
         <ul>
             {{#each categories}}
-                <li><a href="/{{this}}">{{this}}</a></li>
+                <li class="{{#ifEquals ../activeCategory this}}active{{/ifEquals}}"><a href="/{{this}}">{{this}}</a></li>
             {{/each}}
         </ul>
     </aside>
