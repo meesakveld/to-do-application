@@ -1,8 +1,8 @@
 <header>
-    <div class="logo">
+    <a href="/" class="logo">
         <img src="./images/logo.png" alt="Logo">
         <h1>Just Do IT</h1>
-    </div>
+    </a>
     <button type="button">Logout</button>
 </header>
 
@@ -11,8 +11,8 @@
     <aside>
         <h2>Categories</h2>
         <ul>
-            {{#each (filterUniqueCategories todos)}}
-                <li><button>{{this}}</button></li>
+            {{#each categories}}
+                <li><a href="/{{this}}">{{this}}</a></li>
             {{/each}}
         </ul>
     </aside>
@@ -25,21 +25,25 @@
                 <button type="submit">+</button>
             </form>
 
-            <ul class="todos--unchecked">
-                {{#each (filterUncheckedTodos todos)}}
-                    {{> todo this}}
-                {{/each}}
-            </ul>
+            {{#if (filterTodosByStatus todos isChecked=false)}}
+                <ul class="todos--unchecked">
+                    {{#each (filterTodosByStatus todos isChecked=false)}}
+                        {{> todo this}}
+                    {{/each}}
+                </ul>
+            {{/if}}
         </article>
 
-        <article class="todos-checked__container">
-            <h2>Things you've done!</h2>
-            <ul class="todos-checked">
-                {{#each (filterCheckedTodos todos)}}
-                    {{> todo this}}
-                {{/each}}
-            </ul>
-        </article>
+        {{#if (filterTodosByStatus todos isChecked=true)}}
+            <article class="todos-checked__container">
+                <h2>Things you've done!</h2>
+                <ul class="todos-checked">
+                    {{#each (filterTodosByStatus todos isChecked=true)}}
+                        {{> todo this}}
+                    {{/each}}
+                </ul>
+            </article>  
+        {{/if}}
     </div>
 
 </main>

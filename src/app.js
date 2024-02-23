@@ -1,6 +1,6 @@
 import express from "express";
 import { create } from "express-handlebars";
-import { home } from "./data/data.js";
+import { todos, categorizedTodos } from "./controllers/todoController.js"
 import path from "path";
 import handlebarsHelpers from "./lib/handlebarsHelpers.js";
 
@@ -23,7 +23,8 @@ app.set("views", path.join(path.resolve("src"), "views"))
 app.use(express.static('public'))
 
 // Routes
-app.get('/', home)
+app.get('/', todos)
+app.get('/:category', categorizedTodos)
 
 // Start server -> npm run start:dev
 app.listen(process.env.PORT, () => {
