@@ -21,7 +21,7 @@ class Todo extends Model { //! Change the name of the class to the name of the t
             properties: {
                 id: { type: "integer" },
                 title: { type: "string", minLength: 1, maxLength: 255 },
-                category_id: { type: "integer" },
+                category_id: { type: ["integer", "null"] },
                 is_completed: { type: "boolean" },
                 created_at: { type: "string" },
                 updated_at: { type: "string" }
