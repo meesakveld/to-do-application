@@ -44,7 +44,14 @@ export const createTodo = async (req, res, next) => {
  * @api {patch} /api/todos/:id Update a todo
  */
 export const updateTodo = async (req, res, next) => {
-    
+    const todo = await Todo.query().findById(req.params.id)
+    if (!todo) {
+        return res.status(404).json({ message: `Todo with id: ${req.params.id} not found` })
+    }
+
+    const body = req.body;
+    const updatedTodo = await Todo.query().patchAndFetchById(req.params.id, body);
+    res.json(updatedTodo);
 }
 
 
@@ -52,5 +59,10 @@ export const updateTodo = async (req, res, next) => {
  * @api {delete} /api/todos/:id Delete a todo
  */
 export const deleteTodo = async (req, res, next) => {
-
+    const todo = await Todo.query().findById(req.params.id)
+    if (!todo) {
+        return res.status(404).json({ message: `Todo with id: ${req.params.id} not found` })
+    }
+    await Todo.query().deleteById(req.params.id);
+    res.json({ message: `Todo with id: ${req.params.id} deleted` })
 }
