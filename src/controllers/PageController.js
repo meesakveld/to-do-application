@@ -1,25 +1,31 @@
-import todosData from '../data/todos.js';
-import { filterUniqueCategoriesFromTodos } from '../helpers/index.js';
+import { handleCategories } from '../helpers/index.js';
+import Todo from '../models/Todo.js';
+import Category from '../models/Category.js';
 
-export const todos = (req, res) => {
-    
+export const todos = async (req, res) => {
+    const todos = await Todo.query();
+    const categoriesData = await Category.query();
     const data = {
-        todos: todosData,
-        categories: filterUniqueCategoriesFromTodos(todosData),
-        activeCategory: "all"
+        todos: todos,
+        categories: handleCategories(categoriesData),
+        activeCategory: "All"
     }
     
     res.render("home", data)
 }
 
-export const categorizedTodos = (req, res) => {
+export const categorizedTodos = async (req, res) => {
+    const categoryParam = req.params.category;
+    const category = await Category.query().whereRaw('LOWER(name) = ?', [categoryParam.toLowerCase()]).first();
     
-    const category = req.params.category;
+    const todos = await Todo.query();
+    const categoriesData = await Category.query();
     const data = {
-        todos: category === "all" ? todosData : todosData.filter(todo => todo.category.toLowerCase() === category.toLowerCase()),
-        categories: filterUniqueCategoriesFromTodos(todosData),
-        activeCategory: category
+        todos: !category ? todos : todos.filter(todo => todo.category_id === category.id),
+        categories: handleCategories(categoriesData),
+        activeCategory: !category ? "All" : category.name
     }
+
     res.render("home", data)
 
 }
