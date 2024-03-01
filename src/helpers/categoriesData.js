@@ -6,11 +6,10 @@
  * @returns an array of unique categories extracted from the `todosData` array. The array is sorted in
  * alphabetical order and includes the string 'All' at the beginning.
  */
-export function filterUniqueCategoriesFromTodos(todosData) {
-    const categories = todosData.map(todo => todo.category);
-    const uniqueCategories = [...new Set(categories)];
-    uniqueCategories.sort();
-    uniqueCategories.unshift('All');
-    return uniqueCategories;
+export function handleCategories(categoriesData) {
+    const categories = [...categoriesData].map(category => category.name)
+    categories.sort();
+    categories.unshift('All');
+    return categories;
 }
 

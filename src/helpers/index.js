@@ -1,5 +1,5 @@
-import { filterUniqueCategoriesFromTodos } from './filterUniqueCategoriesFromTodos.js';
+import { handleCategories } from './categoriesData.js';
 
 export {
-    filterUniqueCategoriesFromTodos
+    handleCategories
 }
