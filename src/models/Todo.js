@@ -1,5 +1,7 @@
 import knex from "../lib/Knex.js";
 import { Model } from "objection";
+import Category from "./Category.js";
+
 
 // instantiate the model
 Model.knex(knex);
@@ -27,6 +29,19 @@ class Todo extends Model { //! Change the name of the class to the name of the t
                 updated_at: { type: "string" }
             },
         };
+    }
+
+    static get relationMappings() {
+        return {
+            category: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: Category,
+                join: {
+                    from: "todos.category_id",
+                    to: "categories.id"
+                }
+            }
+        }
     }
 }
 

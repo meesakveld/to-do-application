@@ -1,5 +1,6 @@
 import knex from "../lib/Knex.js";
 import { Model } from "objection";
+import Todo from "./Todo.js";
 
 // instantiate the model
 Model.knex(knex);
@@ -26,6 +27,20 @@ class Category extends Model { //! Change the name of the class to the name of t
             },
         };
     }
+
+    static get relationMappings() {
+        return {
+            todos: {
+                relation: Model.HasManyRelation,
+                modelClass: Todo,
+                join: {
+                    from: "categories.id",
+                    to: "todos.category_id"
+                }
+            }
+        }
+    }
+
 }
 
 export default Category; //! Change the name of the class to the name of the table you want to link
