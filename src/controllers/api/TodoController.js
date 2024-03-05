@@ -12,6 +12,11 @@ export const getTodos = async (req, res, next) => {
 }
 
 /**
+ * @api {get} /api/todos Get all todos with pagination
+ */
+
+
+/**
  * @api {get} /api/todos/:id Get a single todo
  */
 export const getTodo = async (req, res, next) => {
