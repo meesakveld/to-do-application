@@ -2,7 +2,10 @@
     {{#unless isCompleted}}
         <button class="done">Done!</button>
     {{/unless}}
-    <p class="todo">{{title}}</p>
+    <div class="todo">
+        <p class="text">{{title}}</p>
+        <p class="category">{{category.name}}</p>
+    </div>
     <button class="delete">Delete</button>
     {{#unless isCompleted}}
         <button class="edit">Edit</button>
