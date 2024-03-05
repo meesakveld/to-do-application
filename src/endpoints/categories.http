@@ -1,0 +1,29 @@
+# Get all categories
+GET http://localhost:3000/api/category
+
+
+# Get a category by id
+GET http://localhost:3000/api/category/1
+
+
+# Create a category
+POST http://localhost:3000/api/category
+content-type: application/json
+
+{
+  "name": "Category 1"
+}
+
+
+# Update a category
+PATCH http://localhost:3000/api/category/1
+content-type: application/json
+
+{
+  "name": "Outside"
+}
+
+
+# Delete a category
+DELETE http://localhost:3000/api/category/9
+
