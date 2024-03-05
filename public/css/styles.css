@@ -135,6 +135,17 @@ main {
     & .todo {
         flex-grow: 1;
         color: black;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        & .text {
+            font-weight: 500;
+        }
+
+        & .category {
+            color: gray;
+        }
     }
 
     & .delete {
