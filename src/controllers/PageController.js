@@ -6,11 +6,15 @@ export const todos = async (req, res) => {
     const todos = await Todo.query().withGraphFetched('category');
     const categoriesData = await Category.query();
     const data = {
-        todos: todos,
+        todos: todos.map(todo => {
+            return {
+                ...todo,
+                categories: categoriesData
+            }
+        }),
         categories: handleCategories(categoriesData),
         activeCategory: "All"
     }
-    
     res.render("home", data)
 }
 
@@ -20,8 +24,14 @@ export const categorizedTodos = async (req, res) => {
     
     const todos = await Todo.query().withGraphFetched('category');
     const categoriesData = await Category.query();
+    const todosData = !category ? todos : todos.filter(todo => todo.category_id === category.id);
     const data = {
-        todos: !category ? todos : todos.filter(todo => todo.category_id === category.id),
+        todos: todosData.map(todo => {
+            return {
+                ...todo,
+                categories: categoriesData
+            }
+        }),
         categories: handleCategories(categoriesData),
         activeCategory: !category ? "All" : category.name
     }

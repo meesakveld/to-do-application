@@ -14,6 +14,6 @@ export default {
         return str.toLowerCase();
     },
     filterAllCategoryOut: (categories, param) => {
-        return categories.filter(category => category !== 'All');
+        return categories.filter(category => category.name !== 'All');
     },
 }

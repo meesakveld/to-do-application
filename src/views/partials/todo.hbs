@@ -1,13 +1,47 @@
 <li class="todo-item">
-    {{#unless isCompleted}}
-        <button class="done">Done!</button>
+
+    {{#unless is_completed}}
+    <form class="done" action="/todo" method="POST">
+        <input type="hidden" name="method" value="PATCH">
+        <input type="hidden" name="id" value="{{id}}">
+        <input type="hidden" name="title" value="{{title}}">
+        <input type="hidden" name="category_id" value="{{category.id}}">
+        <input type="hidden" name="is_completed" value="true">
+        <button>Done!</button>
+    </form>
     {{/unless}}
+
     <div class="todo">
         <p class="text">{{title}}</p>
         <p class="category">{{category.name}}</p>
+        
+        {{#unless is_completed}}
+            <form action="/todo" method="POST">
+                <input type="hidden" name="method" value="PATCH">
+                <input type="hidden" name="id" value="{{id}}">
+                <input required type="text" name="title" value="{{title}}">
+
+                <select name="category_id" class="categoryOptions">
+                    <option value="">Choose a category</option>
+                    {{#each (filterAllCategoryOut categories) as |item|}}
+                        <option {{#ifEquals ../category.name item.name}}selected{{/ifEquals}} value="{{item.id}}">{{item.name}}</option>
+                    {{/each}}
+                </select>
+            </form>
+        {{/unless}}
+
     </div>
-    <button class="delete">Delete</button>
-    {{#unless isCompleted}}
-        <button class="edit">Edit</button>
+
+    <form class="delete" action="/todo" method="POST">
+        <input type="hidden" name="method" value="DELETE">
+        <input type="hidden" name="id" value="{{id}}">
+        <button>Delete</button>
+    </form>
+
+    {{#unless is_completed}}
+        <form class="edit">
+            <button>Edit</button>
+        </form>
     {{/unless}}
+
 </li>

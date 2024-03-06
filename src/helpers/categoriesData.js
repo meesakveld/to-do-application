@@ -7,9 +7,12 @@
  * alphabetical order and includes the string 'All' at the beginning.
  */
 export function handleCategories(categoriesData) {
-    const categories = [...categoriesData].map(category => category.name)
-    categories.sort();
-    categories.unshift('All');
+    const categories = categoriesData
+    categories.sort((a, b) => a.name.localeCompare(b.name));
+    categories.unshift({
+        id: null,
+        name: 'All',
+    });
     return categories;
 }
 

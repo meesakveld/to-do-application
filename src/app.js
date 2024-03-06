@@ -5,6 +5,7 @@ import path from "path";
 import handlebarsHelpers from "./lib/handlebarsHelpers.js";
 import { getTodos, getTodo, createTodo, updateTodo, deleteTodo } from "./controllers/api/TodoController.js";
 import { getCategories, getCategory, createCategory, updateCategory, deleteCategory } from "./controllers/api/CategoryController.js";
+import { handleTodo } from "./controllers/TodoController.js";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -33,6 +34,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', todos)
 app.get('/:category', categorizedTodos)
 
+// - Todos Routing
+app.post('/todo', handleTodo)
+
+
 // API Todos routes
 app.get('/api/todo', getTodos)
 app.get('/api/todo/:id', getTodo)
@@ -46,7 +51,6 @@ app.get('/api/category/:id', getCategory)
 app.post('/api/category', createCategory)
 app.patch('/api/category/:id', updateCategory)
 app.delete('/api/category/:id', deleteCategory)
-
 
 // Start server -> npm run start:dev
 app.listen(process.env.PORT, () => {
