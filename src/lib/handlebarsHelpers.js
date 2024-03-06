@@ -15,5 +15,5 @@ export default {
     },
     filterAllCategoryOut: (categories, param) => {
         return categories.filter(category => category !== 'All');
-    }
+    },
 }

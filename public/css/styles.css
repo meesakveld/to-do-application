@@ -68,6 +68,15 @@ aside {
         background-color: rgb(100 56 198);
         padding: 0.25rem 0;
     }
+
+    & .top {
+        display: flex;
+        justify-content: space-between;
+
+        & button {
+            font-size: 2rem;
+        }
+    }
 }
 
 .content {
