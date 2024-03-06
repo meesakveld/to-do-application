@@ -58,7 +58,8 @@ header {
     }
 }
 
-aside, .content {
+aside,
+.content {
     padding-top: 1rem;
 }
 
@@ -74,7 +75,7 @@ aside {
     background-color: rgb(69, 69, 69);
     flex-grow: 1;
 
-    & > article {
+    &>article {
         margin-bottom: 3rem;
     }
 }
@@ -85,7 +86,7 @@ main {
     padding-top: 0;
     height: 100vh;
 
-    & > * {
+    &>* {
         padding: 1rem;
     }
 
@@ -102,11 +103,34 @@ main {
 .add-todo {
     display: flex;
     margin-bottom: 1rem;
-    height: 2rem;
-    
-    & input {
-        flex-grow: 1;
-        padding: 0.5rem;
+
+    & .add-todo__inputs {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+
+        & input {
+            flex-grow: 1;
+            padding: 0.5rem;
+            border: none;
+        }
+
+        & .category {
+            margin: 0;
+            border: none;
+            font-family: inherit;
+            color: gray;
+            text-align: right;
+        }
+
+        @container (width < 25rem) {
+            flex-direction: column;
+
+            & .category {
+                text-align: left;
+                height: 2.5rem
+            }
+        }
     }
 
     & button {
@@ -115,7 +139,8 @@ main {
     }
 }
 
-.todos--unchecked, .todos-checked {
+.todos--unchecked__container,
+.todos-checked__container {
     container-type: inline-size;
 }
 
@@ -124,7 +149,7 @@ main {
     flex-direction: row;
     background-color: white;
 
-    & > * {
+    &>* {
         padding: 0.25rem 0.5rem;
     }
 
@@ -158,21 +183,25 @@ main {
 
     @container (width < 25rem) {
         flex-wrap: wrap;
-        
+
         & .todo {
             flex-basis: 100%;
             order: -1;
             padding: 0.5rem;
         }
 
-        & .done, .delete, .edit {
+        & .done,
+        .delete,
+        .edit {
             flex-grow: 1;
         }
     }
 }
 
 .todos-checked .todo-item {
-    & .edit, .done {
+
+    & .edit,
+    .done {
         display: none;
     }
 }

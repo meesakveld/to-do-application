@@ -21,7 +21,15 @@
         <article class="todos--unchecked__container">
             <h2>We've got things to do!</h2>
             <form class="add-todo">
-                <input name="todo" type="text" placeholder="What is your task?">
+                <div class="add-todo__inputs">
+                    <input name="todo" type="text" placeholder="What is your task?">
+                    <select name="category" class="category">
+                        <option value="">Choose a category</option>
+                        {{#each (filterAllCategoryOut categories)}}
+                            <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                </div>
                 <button type="submit">+</button>
             </form>
 
