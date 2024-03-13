@@ -54,5 +54,5 @@ app.delete('/api/category/:id', deleteCategory)
 
 // Start server -> npm run start:dev
 app.listen(process.env.PORT, () => {
-	console.log(`Todo app listening on port ${process.env.PORT}`)
+	console.log(`Todo app listening on http://localhost:${process.env.PORT}`)
 })
