@@ -9,11 +9,7 @@ export const createTodo = async (req, res, next) => {
         errors.array().forEach(error => {
             req.formErrorFields[error.path] = error.msg;
         });
-        req.flash = {
-            type: "danger",
-            message: "There are errors in the form. Please fix them and try again."
-        }
-
+        
         return res.redirect(req.headers.referer);
     }
     
