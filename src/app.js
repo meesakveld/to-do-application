@@ -16,11 +16,12 @@ import TodoValidation from "./middleware/validation/TodoValidation.js";
 // Controllers
 import { todos } from "./controllers/PageController.js"
 import { handleTodo } from "./controllers/TodoController.js";
-import { getTodos, getTodo, createTodo, updateTodo, deleteTodo } from "./controllers/api/TodoController.js";
-import { getCategories, getCategory, createCategory, updateCategory, deleteCategory } from "./controllers/api/CategoryController.js";
 
 // Helpers
 import path from "path";
+
+// Routes
+import apiRoutes from "./routes/api/index.js";
 
 /**
  * ------------------------------
@@ -62,20 +63,9 @@ app.get('/:category', todos)
 // - Todos Routing
 app.post('/todo', TodoValidation, handleTodo)
 
+// API Routes
+app.use('/api', apiRoutes)
 
-// API Todos routes
-app.get('/api/todo', getTodos)
-app.get('/api/todo/:id', getTodo)
-app.post('/api/todo', createTodo)
-app.patch('/api/todo/:id', updateTodo)
-app.delete('/api/todo/:id', deleteTodo)
-
-// API Categories routes
-app.get('/api/category', getCategories)
-app.get('/api/category/:id', getCategory)
-app.post('/api/category', createCategory)
-app.patch('/api/category/:id', updateCategory)
-app.delete('/api/category/:id', deleteCategory)
 
 /**
  * ------------------------------
