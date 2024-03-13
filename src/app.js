@@ -1,16 +1,32 @@
+/**
+ * ------------------------------
+ *            IMPORTS
+ * ------------------------------
+ */
+
 import express from "express";
 import { create } from "express-handlebars";
-import { todos, categorizedTodos } from "./controllers/PageController.js"
-import path from "path";
+import bodyParser from "body-parser";
 import handlebarsHelpers from "./lib/handlebarsHelpers.js";
+import dotenv from "dotenv";
+
+// Midleware
+import TodoValidation from "./middleware/validation/TodoValidation.js";
+
+// Controllers
+import { todos, categorizedTodos } from "./controllers/PageController.js"
+import { handleTodo } from "./controllers/TodoController.js";
 import { getTodos, getTodo, createTodo, updateTodo, deleteTodo } from "./controllers/api/TodoController.js";
 import { getCategories, getCategory, createCategory, updateCategory, deleteCategory } from "./controllers/api/CategoryController.js";
-import { handleTodo } from "./controllers/TodoController.js";
 
-import dotenv from "dotenv";
-dotenv.config();
+// Helpers
+import path from "path";
 
-import bodyParser from "body-parser";
+/**
+ * ------------------------------
+ *        CONFIGURATION
+ * ------------------------------
+*/
 
 const app = express()
 
@@ -26,11 +42,20 @@ app.set("views", path.join(path.resolve("src"), "views"))
 // Static files 
 app.use(express.static('public'))
 
+// Load environment variables
+dotenv.config();
+
 // View the body of the request
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// App Routes
+/**
+ * ------------------------------
+ *            ROUTING
+ * ------------------------------
+*/
+
+// Page Routes
 app.get('/', todos)
 app.get('/:category', categorizedTodos)
 
@@ -51,6 +76,12 @@ app.get('/api/category/:id', getCategory)
 app.post('/api/category', createCategory)
 app.patch('/api/category/:id', updateCategory)
 app.delete('/api/category/:id', deleteCategory)
+
+/**
+ * ------------------------------
+ *        START SERVER
+ * ------------------------------
+ */
 
 // Start server -> npm run start:dev
 app.listen(process.env.PORT, () => {
