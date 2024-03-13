@@ -14,7 +14,7 @@ import dotenv from "dotenv";
 import TodoValidation from "./middleware/validation/TodoValidation.js";
 
 // Controllers
-import { todos, categorizedTodos } from "./controllers/PageController.js"
+import { todos } from "./controllers/PageController.js"
 import { handleTodo } from "./controllers/TodoController.js";
 import { getTodos, getTodo, createTodo, updateTodo, deleteTodo } from "./controllers/api/TodoController.js";
 import { getCategories, getCategory, createCategory, updateCategory, deleteCategory } from "./controllers/api/CategoryController.js";
@@ -57,10 +57,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Page Routes
 app.get('/', todos)
-app.get('/:category', categorizedTodos)
+app.get('/:category', todos)
 
 // - Todos Routing
-app.post('/todo', handleTodo)
+app.post('/todo', TodoValidation, handleTodo)
 
 
 // API Todos routes

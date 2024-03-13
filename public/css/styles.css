@@ -111,17 +111,27 @@ main {
 
 .add-todo {
     display: flex;
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
 
     & .add-todo__inputs {
         display: flex;
-        flex-wrap: wrap;
         width: 100%;
 
-        & input {
+        & .add-todo__inputField {
+            position: relative;
+            width: 100%;
             flex-grow: 1;
-            padding: 0.5rem;
-            border: none;
+
+            & input {
+                width: 100%;
+                padding: 0.5rem;
+                border: none;
+            }
+
+            & p {
+                position: absolute;
+                color: rgb(255, 0, 0);
+            }
         }
 
         & .category {
@@ -158,7 +168,7 @@ main {
     flex-direction: row;
     background-color: white;
 
-    & > * {
+    &>* {
         padding: 0.25rem 0.5rem;
     }
 
@@ -186,7 +196,9 @@ main {
         }
 
         &.editing {
-            & .text, .category {
+
+            & .text,
+            .category {
                 display: none;
             }
 

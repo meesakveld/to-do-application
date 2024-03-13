@@ -15,7 +15,7 @@
         </div>
         <ul>
             {{#each categories}}
-                <li class="{{#ifEquals ../activeCategory name}}active{{/ifEquals}}"><a href="/{{#toLowerCase name}}{{/toLowerCase}}">{{name}}</a></li>
+                <li class="{{#ifEquals ../activeCategory id}}active{{/ifEquals}}"><a href="/{{#toLowerCase name}}{{/toLowerCase}}">{{name}}</a></li>
             {{/each}}
         </ul>
     </aside>
@@ -26,11 +26,14 @@
             <form class="add-todo" action="/todo" method="POST">
                 <input type="hidden" name="method" value="POST">
                 <div class="add-todo__inputs">
-                    <input required name="title" type="text" placeholder="What is your task?">
+                    <div class="add-todo__inputField">
+                        <input required name="title" type="text" placeholder="What is your task?" value="{{input.title}}">
+                        <p>{{input.err}}</p>
+                    </div>
                     <select name="category_id" class="category">
                         <option value="">Choose a category</option>
                         {{#each (filterAllCategoryOut categories)}}
-                            <option {{#ifEquals ../activeCategory name}}selected{{/ifEquals}} value="{{id}}">{{name}}</option>
+                            <option {{#ifEquals ../activeCategory id}}selected{{/ifEquals}} value="{{id}}">{{name}}</option>
                         {{/each}}
                     </select>
                 </div>
