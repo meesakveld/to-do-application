@@ -61,7 +61,7 @@ app.get('/', todos)
 app.get('/:category', todos)
 
 // - Todos Routing
-app.post('/todo', TodoValidation, handleTodo)
+app.post('/todo', TodoValidation, handleTodo, todos)
 
 // API Routes
 app.use('/api', apiRoutes)

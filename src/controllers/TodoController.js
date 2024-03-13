@@ -9,8 +9,7 @@ export const createTodo = async (req, res, next) => {
         errors.array().forEach(error => {
             req.formErrorFields[error.path] = error.msg;
         });
-        
-        return res.redirect(req.headers.referer);
+        return next()
     }
     
     await Todo.query().insert({
@@ -20,7 +19,7 @@ export const createTodo = async (req, res, next) => {
     });
     req.body = {}
 
-    return res.redirect(req.headers.referer);
+    return next()
 }
 
 
