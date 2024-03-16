@@ -16,8 +16,16 @@ export const getTodos = async (req, res) => {
 
     // Get all todos
     const active_category_id = req.query.category ? categories.find(category => category.name.toLowerCase() === req.query.category)?.id : null;
-    const todos = active_category_id ? await Todo.query().where('category_id', "=", active_category_id).withGraphFetched('category') : await Todo.query().withGraphFetched('category');
+    let todos = active_category_id ? await Todo.query().where('category_id', "=", active_category_id).withGraphFetched('category') : await Todo.query().withGraphFetched('category');
     todos.forEach(todo => todo.categories = categories);
+    todos.forEach(todo => {
+        if (todo.id === parseInt(req.todoError?.todoId)) {
+            todo.error = {
+                message: req.todoError?.message,
+                value: req.todoError?.value
+            }
+        } else { todo.error = null }
+    })
 
     // Set the data object
     const data = {

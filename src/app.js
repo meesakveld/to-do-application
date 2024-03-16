@@ -12,10 +12,12 @@ import dotenv from "dotenv";
 
 // Midleware
 import TodoValidation from "./middleware/validation/TodoValidation.js";
+import CategoryValidation from "./middleware/validation/CategoryValidation.js";
 
 // Controllers
 import { getTodos } from "./controllers/PageController.js"
 import { handleTodo } from "./controllers/TodoController.js";
+import { handleCategory } from "./controllers/CategoryController.js";
 
 // Helpers
 import path from "path";
@@ -58,7 +60,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Page Routes
 app.get('/', getTodos)
-app.post('/', TodoValidation, handleTodo, getTodos)
+
+// Handle form data
+app.post('/todo', TodoValidation, handleTodo, getTodos)
+app.post('/category', CategoryValidation, handleCategory, getTodos)
 
 // API Routes
 app.use('/api', apiRoutes)

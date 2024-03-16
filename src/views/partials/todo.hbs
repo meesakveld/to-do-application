@@ -1,7 +1,11 @@
 <li class="todo-item">
 
+    {{#if error}}
+        <p class="error">{{error.message}}</p>
+    {{/if}}
+
     {{#unless is_completed}}
-    <form class="done" action="/" method="POST">
+    <form class="done" action="/todo" method="POST">
         <input type="hidden" name="method" value="PATCH">
         <input type="hidden" name="id" value="{{id}}">
         <input type="hidden" name="title" value="{{title}}">
@@ -11,15 +15,15 @@
     </form>
     {{/unless}}
 
-    <div class="todo">
+    <div class="todo {{#if error}}editing{{/if}}">
         <p class="text">{{title}}</p>
         <p class="category">{{category.name}}</p>
         
         {{#unless is_completed}}
-            <form action="/" method="POST">
+            <form action="/todo" method="POST">
                 <input type="hidden" name="method" value="PATCH">
                 <input type="hidden" name="id" value="{{id}}">
-                <input required type="text" name="title" value="{{title}}">
+                <input required type="text" name="title" value="{{#if error}}{{error.value}}{{else}}{{title}}{{/if}}">
 
                 <select name="category_id" class="categoryOptions">
                     <option value="">Choose a category</option>
@@ -32,7 +36,7 @@
 
     </div>
 
-    <form class="delete" action="/" method="POST">
+    <form class="delete" action="/todo" method="POST">
         <input type="hidden" name="method" value="DELETE">
         <input type="hidden" name="id" value="{{id}}">
         <button>Delete</button>

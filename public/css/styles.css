@@ -69,12 +69,27 @@ aside {
         padding: 0.25rem 0;
     }
 
+    ul li {
+        display: flex;
+        justify-content: space-between;
+    }
+
     & .top {
         display: flex;
         justify-content: space-between;
 
         & button {
             font-size: 2rem;
+        }
+    }
+
+    & .add_category {
+        margin-top: 1rem;
+    
+        & input {
+            background-color: transparent;
+            color: white;
+            width: 100%;
         }
     }
 }
@@ -172,6 +187,18 @@ main {
 
     &>* {
         padding: 0.25rem 0.5rem;
+    }
+
+    &:has(.error) {
+        position: relative;
+        margin-top: 1rem;
+
+        & .error {
+            position: absolute;
+            color: rgb(255, 0, 0);
+            top: -1.5rem;
+            font-size: 0.8rem;
+        }
     }
 
     & .done {

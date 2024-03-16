@@ -11,20 +11,30 @@
     <aside>
         <div class="top">
             <h2>Categories</h2>
-            <button>+</button>
         </div>
         <ul>
             <li class="{{#unless (checkForActiveCategories categories)}}active{{/unless}}"><a href="/">All</a></li>
             {{#each categories}}
-                <li class="{{#if isActive}}active{{/if}}"><a href="/?category={{#toLowerCase name}}{{/toLowerCase}}">{{name}}</a></li>
+                <li class="{{#if isActive}}active{{/if}}">
+                    <a href="/?category={{#toLowerCase name}}{{/toLowerCase}}">{{name}}</a>
+                    <form action="/category" method="POST">
+                        <input type="hidden" name="method" value="DELETE">
+                        <input type="hidden" name="id" value="{{id}}">
+                        <button type="submit">x</button>
+                    </form>
+                </li>
             {{/each}}
         </ul>
+        <form action="/category" class="add_category" method="POST">
+            <input type="hidden" name="method" value="POST">
+            <input type="text" name="name" placeholder="Add a category">
+        </form>
     </aside>
 
     <div class="content">
         <article class="todos--unchecked__container">
             <h2>We've got things to do!</h2>
-            <form class="add-todo" action="/" method="POST">
+            <form class="add-todo" action="/todo" method="POST">
                 <input type="hidden" name="method" value="POST">
                 <div class="add-todo__inputs">
                     <div class="add-todo__inputField">
@@ -34,7 +44,7 @@
                     <select name="category_id" class="category">
                         <option value="">Choose a category</option>
                         {{#each categories}}
-                            <option {{#ifEquals ../activeCategory id}}selected{{/ifEquals}} value="{{id}}">{{name}}</option>
+                            <option {{#if isActive}}selected{{/if}} value="{{id}}">{{name}}</option>
                         {{/each}}
                     </select>
                 </div>
