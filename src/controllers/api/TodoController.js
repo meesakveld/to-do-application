@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import Todo from '../../models/Todo.js'
 
 /**
@@ -32,6 +33,12 @@ export const getTodo = async (req, res, next) => {
  * @api {post} /api/todos Create a new todo
  */
 export const createTodo = async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const title = req.body.title;
     const category_id = req.body.category_id || null;
     const is_completed = req.body.is_completed || false;
@@ -49,6 +56,12 @@ export const createTodo = async (req, res, next) => {
  * @api {patch} /api/todos/:id Update a todo
  */
 export const updateTodo = async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const todo = await Todo.query().findById(req.params.id)
     if (!todo) {
         return res.status(404).json({ message: `Todo with id: ${req.params.id} not found` })
