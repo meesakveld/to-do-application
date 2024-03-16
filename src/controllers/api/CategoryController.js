@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import Category from '../../models/Category.js'
 
 /**
@@ -28,6 +29,12 @@ export const getCategory = async (req, res, next) => {
  * @api {post} /api/categories Create a new category
  */
 export const createCategory = async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const name = req.body.name;
     const category = await Category.query().insert({
         name
@@ -40,6 +47,12 @@ export const createCategory = async (req, res, next) => {
  * @api {patch} /api/categories/:id Update a category
  */
 export const updateCategory = async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const category = await Category.query().findById(req.params.id)
     if (!category) {
         return res.status(404).json({ message: `Category with id: ${req.params.id} not found` })

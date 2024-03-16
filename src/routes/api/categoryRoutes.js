@@ -9,6 +9,8 @@ import Express from "express";
 // Controllers
 import { getCategories, getCategory, createCategory, updateCategory, deleteCategory } from "../../controllers/api/CategoryController.js";
 
+// Middleware
+import CategoryValidation from "../../middleware/validation/CategoryValidation.js";
 
 /**
  * ------------------------------
@@ -27,8 +29,8 @@ const router = Express.Router();
 
 router.get('/', getCategories)
 router.get('/:id', getCategory)
-router.post('/', createCategory)
-router.patch('/:id', updateCategory)
+router.post('/', CategoryValidation, createCategory)
+router.patch('/:id', CategoryValidation, updateCategory)
 router.delete('/:id', deleteCategory)
 
 
