@@ -14,7 +14,7 @@ export const getTodos = async (req, res, next) => {
 
 /**
  * @api {get} /api/todos Get all todos with pagination
- */
+*/
 
 
 /**
