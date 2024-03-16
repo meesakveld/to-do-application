@@ -14,8 +14,9 @@
             <button>+</button>
         </div>
         <ul>
+            <li class="{{#unless (checkForActiveCategories categories)}}active{{/unless}}"><a href="/">All</a></li>
             {{#each categories}}
-                <li class="{{#ifEquals ../activeCategory id}}active{{/ifEquals}}"><a href="/?category={{#toLowerCase name}}{{/toLowerCase}}">{{name}}</a></li>
+                <li class="{{#if isActive}}active{{/if}}"><a href="/?category={{#toLowerCase name}}{{/toLowerCase}}">{{name}}</a></li>
             {{/each}}
         </ul>
     </aside>
@@ -23,7 +24,7 @@
     <div class="content">
         <article class="todos--unchecked__container">
             <h2>We've got things to do!</h2>
-            <form class="add-todo" action="/todo" method="POST">
+            <form class="add-todo" action="/" method="POST">
                 <input type="hidden" name="method" value="POST">
                 <div class="add-todo__inputs">
                     <div class="add-todo__inputField">
@@ -32,7 +33,7 @@
                     </div>
                     <select name="category_id" class="category">
                         <option value="">Choose a category</option>
-                        {{#each (filterAllCategoryOut categories)}}
+                        {{#each categories}}
                             <option {{#ifEquals ../activeCategory id}}selected{{/ifEquals}} value="{{id}}">{{name}}</option>
                         {{/each}}
                     </select>

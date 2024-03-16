@@ -1,5 +1,7 @@
-import { handleCategories } from './categoriesData.js';
+// IMPORTS
 
+
+// EXPORTS
 export {
-    handleCategories
+
 }

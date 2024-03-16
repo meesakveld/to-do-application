@@ -13,7 +13,8 @@ export default {
     toLowerCase: (str) => {
         return str.toLowerCase();
     },
-    filterAllCategoryOut: (categories, param) => {
-        return categories.filter(category => category.name !== 'All');
-    },
+    checkForActiveCategories: (categories) => {
+        if(categories.find(category => category.isActive)) { return true }
+        return false;
+    }
 }

@@ -1,4 +1,3 @@
-import { handleCategories } from '../helpers/index.js';
 import Todo from '../models/Todo.js';
 import Category from '../models/Category.js';
 
@@ -6,25 +5,23 @@ import Category from '../models/Category.js';
 /**
  * Retrieves todos based on the specified category and renders the home view.
 */
-export const todos = async (req, res) => {
-    const categoryParam = req.query.category || null;
-    let category = null;
-    if (categoryParam) {
-        category = await Category.query().whereRaw('LOWER(name) = ?', [categoryParam.toLowerCase()]).first();
+export const getTodos = async (req, res) => {
+    // Get all categories and set the active category
+    const categories = await Category.query();
+    if (req.query.category) {
+        categories.forEach(category => category.name.toLowerCase() === req.query.category ? category.isActive = true : category.isActive = false);
+    } else {
+        categories.forEach(category => category.isActive = false);
     }
-    
-    const todos = await Todo.query().withGraphFetched('category');
-    const categoriesData = await Category.query()
-    const todosData = !category ? todos : todos.filter(todo => todo.category_id === category.id);
+
+    // Get all todos
+    const active_category_id = req.query.category ? categories.find(category => category.name.toLowerCase() === req.query.category)?.id : null;
+    const todos = active_category_id ? await Todo.query().where('category_id', "=", active_category_id).withGraphFetched('category') : await Todo.query().withGraphFetched('category');
+    todos.forEach(todo => todo.categories = categories);
+
     const data = {
-        todos: todosData.map(todo => {
-            return {
-                ...todo,
-                categories: categoriesData
-            }
-        }),
-        categories: handleCategories(categoriesData),
-        activeCategory: !category ? null : category.id,
+        todos, 
+        categories,
         input: {
             title: req.body?.title || "",
             category_id: req.body.category_id || "",
@@ -32,6 +29,6 @@ export const todos = async (req, res) => {
         },
     }
 
-    res.render("home", data)
-
+    // Render the home view
+    return res.render("home", data);
 }

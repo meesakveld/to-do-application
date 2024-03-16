@@ -14,7 +14,7 @@ import dotenv from "dotenv";
 import TodoValidation from "./middleware/validation/TodoValidation.js";
 
 // Controllers
-import { todos } from "./controllers/PageController.js"
+import { getTodos } from "./controllers/PageController.js"
 import { handleTodo } from "./controllers/TodoController.js";
 
 // Helpers
@@ -57,10 +57,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 */
 
 // Page Routes
-app.get('/', todos)
-
-// - Todos Routing
-app.post('/todo', TodoValidation, handleTodo, todos)
+app.get('/', getTodos)
+app.post('/', TodoValidation, handleTodo, getTodos)
 
 // API Routes
 app.use('/api', apiRoutes)
