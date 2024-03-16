@@ -7,7 +7,7 @@ import Category from '../models/Category.js';
  * Retrieves todos based on the specified category and renders the home view.
 */
 export const todos = async (req, res) => {
-    const categoryParam = req.params.category || null;
+    const categoryParam = req.query.category || null;
     let category = null;
     if (categoryParam) {
         category = await Category.query().whereRaw('LOWER(name) = ?', [categoryParam.toLowerCase()]).first();

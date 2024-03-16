@@ -15,7 +15,7 @@
         </div>
         <ul>
             {{#each categories}}
-                <li class="{{#ifEquals ../activeCategory id}}active{{/ifEquals}}"><a href="/{{#toLowerCase name}}{{/toLowerCase}}">{{name}}</a></li>
+                <li class="{{#ifEquals ../activeCategory id}}active{{/ifEquals}}"><a href="/?category={{#toLowerCase name}}{{/toLowerCase}}">{{name}}</a></li>
             {{/each}}
         </ul>
     </aside>

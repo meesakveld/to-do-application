@@ -58,7 +58,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Page Routes
 app.get('/', todos)
-app.get('/:category', todos)
 
 // - Todos Routing
 app.post('/todo', TodoValidation, handleTodo, todos)
