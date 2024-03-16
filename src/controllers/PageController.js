@@ -19,6 +19,7 @@ export const getTodos = async (req, res) => {
     const todos = active_category_id ? await Todo.query().where('category_id', "=", active_category_id).withGraphFetched('category') : await Todo.query().withGraphFetched('category');
     todos.forEach(todo => todo.categories = categories);
 
+    // Set the data object
     const data = {
         todos, 
         categories,
