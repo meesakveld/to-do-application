@@ -17,6 +17,8 @@
     "express-validator": "^7.0.1",
     "handlebars": "^4.7.8",
     "knex": "^3.1.0",
+    "nodemailer": "^6.9.12",
+    "nodemailer-express-handlebars": "^6.1.2",
     "objection": "^3.1.4",
     "sqlite3": "^5.1.7"
   },

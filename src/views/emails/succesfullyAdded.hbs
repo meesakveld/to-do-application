@@ -1,0 +1,15 @@
+{{!-- 
+    item: Dit is de titel van het item dat is toegevoegd. Example: "Todo"
+    value: Dit is de waarde van het item dat is toegevoegd. Example: "Dit is een todo"
+--}}
+
+<svg height="50pt" fill="rgb(67, 95, 121)" style="margin: auto; width: 100%; margin-top: 2rem; margin-bottom: -2rem" preserveAspectRatio="xMidYMid meet" viewBox="0 0 255 255" width="255pt" xmlns="http://www.w3.org/2000/svg"><path d="m1080 2464c-493-74-875-435-982-929-20-95-17-372 6-470 102-439 427-771 861-881 98-25 128-28 270-29 95 0 184 6 220 13 491 107 846 470 930 950 19 108 19 286 0 393-84 478-464 861-939 944-80 14-297 19-366 9zm783-645c89-24 148-128 125-218-13-50-12-49-504-556-154-159-294-305-309-323s-33-32-40-30c-21 5-558 527-583 567-19 30-22 47-20 97 6 96 60 154 156 170 68 11 113-18 284-184l155-152 29 33c15 17 145 153 289 301 300 311 318 323 418 295z" transform="matrix(.1 0 0 -.1 0 255)"/></svg>
+<div style="text-align: center; margin: 3rem">
+    <h1 style="color: rgb(67, 95, 121);">Confirmation of adding a new {{ item }}!</h1>
+    <p><strong>Todo was succesfully added!</strong></p>
+</div>
+<hr>
+<div class="mail-body">
+    <h2 style="color: rgb(67, 95, 121); text-transform: capitalize;">{{ item }}:</h2>
+    <p style="padding: 1rem; background-color: rgb(80, 112, 141, 0.1); font-weight:">{{ value }}</p>
+</div>

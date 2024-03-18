@@ -1,4 +1,5 @@
 import { validationResult } from "express-validator";
+import MailTransporter from "../lib/MailTransporter.js";
 import Todo from "../models/Todo.js";
 
 export const createTodo = async (req, res, next) => {
@@ -17,6 +18,22 @@ export const createTodo = async (req, res, next) => {
         category_id: parseInt(req.body.category_id) || null,
         is_completed: false
     });
+
+    try {
+        MailTransporter.sendMail({
+            from: "noreply@just-do-it.com",
+            to: "hello@meesakveld.be",
+            subject: "Todo succesfully added!",
+            template: "succesfullyAdded",
+            context: {
+                item: "Todo",
+                value: req.body.title
+            },
+        });
+    } catch (error) {
+        console.error(error);
+    }
+
     req.body = {}
 
     return res.redirect(req.headers.referer)
