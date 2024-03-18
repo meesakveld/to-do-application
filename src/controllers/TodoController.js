@@ -83,6 +83,28 @@ export const deleteTodo = async (req, res, next) => {
 }
 
 
+export const mailAllTodos = async (req, res, next) => {
+    const todos = await Todo.query().withGraphFetched('category');
+    const mail = req.body.email;
+
+    try {
+        await MailTransporter.sendMail({
+            from: "noreply@just-do-it.com",
+            to: mail,
+            subject: "List of all todos!",
+            template: "allTodos",
+            context: {
+                todos: todos
+            },
+        });
+    } catch (error) {
+        console.error(error);
+    }
+
+    return res.redirect(req.headers.referer)
+}
+
+
 export const handleTodo = async (req, res, next) => {
     const method = req.body.method;
 
@@ -94,6 +116,10 @@ export const handleTodo = async (req, res, next) => {
     }
     if (method === "DELETE") {
         deleteTodo(req, res, next);
+    }
+
+    if (method === "MAIL") {
+        mailAllTodos(req, res, next);
     }
 
 }
