@@ -8,7 +8,7 @@ import express from "express";
 import { create } from "express-handlebars";
 import bodyParser from "body-parser";
 import handlebarsHelpers from "./lib/handlebarsHelpers.js";
-import dotenv from "dotenv";
+import { PORT } from "./consts.js";
 
 // Midleware
 import TodoValidation from "./middleware/validation/TodoValidation.js";
@@ -45,9 +45,6 @@ app.set("views", path.join(path.resolve("src"), "views"))
 // Static files 
 app.use(express.static('public'))
 
-// Load environment variables
-dotenv.config();
-
 // View the body of the request
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -77,6 +74,6 @@ app.use('/api', apiRoutes)
  */
 
 // Start server -> npm run start:dev
-app.listen(process.env.PORT, () => {
-	console.log(`Todo app listening on http://localhost:${process.env.PORT}`)
+app.listen(PORT, () => {
+	console.log(`Todo app listening on http://localhost:${PORT}`)
 })

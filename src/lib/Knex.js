@@ -1,11 +1,10 @@
-import dotenv from "dotenv";
-dotenv.config();
+import { NODE_ENV } from "../consts.js";
 
 import knex from "knex";
 import knexConfig from "../../knexfile.js";
 
 // get the environment from the .env file
-const environment = process.env.NODE_ENV || "development";
+const environment = NODE_ENV || "development";
 
 // get the configuration for the environment
 const config = knexConfig[environment];
