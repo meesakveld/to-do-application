@@ -8,14 +8,22 @@ import Category from '../models/Category.js';
 export const getTodos = async (req, res) => {
     // Get all categories and set the active category
     const categories = await Category.query();
-    if (req.query.category) {
-        categories.forEach(category => category.name.toLowerCase() === req.query.category ? category.isActive = true : category.isActive = false);
+
+    let activeCategory;
+    if(req.params.slug) {
+        activeCategory = req.params.slug;
+    } else if (req.body.activeCategory) {
+        activeCategory = req.body.activeCategory;
+    }
+ 
+    if (activeCategory) {
+        categories.forEach(category => category.name.toLowerCase() === activeCategory ? category.isActive = true : category.isActive = false);
     } else {
         categories.forEach(category => category.isActive = false);
     }
 
     // Get all todos
-    const active_category_id = req.query.category ? categories.find(category => category.name.toLowerCase() === req.query.category)?.id : null;
+    const active_category_id = activeCategory ? categories.find(category => category.name.toLowerCase() === activeCategory)?.id : null;
     let todos = active_category_id ? await Todo.query().where('category_id', "=", active_category_id).withGraphFetched('category') : await Todo.query().withGraphFetched('category');
     todos.forEach(todo => todo.categories = categories);
     todos.forEach(todo => {
@@ -30,6 +38,7 @@ export const getTodos = async (req, res) => {
     // Set the data object
     const data = {
         todos, 
+        activeCategory,
         categories,
         input: {
             title: req.body?.title || "",

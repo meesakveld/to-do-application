@@ -23,6 +23,7 @@
             <form action="/todo" method="POST">
                 <input type="hidden" name="method" value="PATCH">
                 <input type="hidden" name="id" value="{{id}}">
+                <input type="hidden" name="activeCategory" value="{{ findActiveCategory categories }}">
                 <input required type="text" name="title" value="{{#if error}}{{error.value}}{{else}}{{title}}{{/if}}">
 
                 <select name="category_id" class="categoryOptions">

@@ -1,6 +1,6 @@
 <header>
     <a href="/" class="logo">
-        <img src="./images/logo.png" alt="Logo">
+        <img src="/images/logo.png" alt="Logo">
         <h1>Just Do IT</h1>
     </a>
     <button type="button">Logout</button>
@@ -16,7 +16,7 @@
             <li class="{{#unless (checkForActiveCategories categories)}}active{{/unless}}"><a href="/">All</a></li>
             {{#each categories}}
                 <li class="{{#if isActive}}active{{/if}}">
-                    <a href="/?category={{#toLowerCase name}}{{/toLowerCase}}">{{name}}</a>
+                    <a href="/category/{{#toLowerCase name}}{{/toLowerCase}}">{{name}}</a>
                     <form action="/category" method="POST">
                         <input type="hidden" name="method" value="DELETE">
                         <input type="hidden" name="id" value="{{id}}">
@@ -38,6 +38,7 @@
                 <input type="hidden" name="method" value="POST">
                 <div class="add-todo__inputs">
                     <div class="add-todo__inputField">
+                        <input type="hidden" name="activeCategory" value="{{ findActiveCategory categories }}">
                         <input required name="title" type="text" placeholder="What is your task?" value="{{input.title}}">
                         <p>{{input.err}}</p>
                     </div>
@@ -75,4 +76,4 @@
 
 </main>
 
-<script src="./scripts/editTodo.js"></script>
+<script src="/scripts/editTodo.js"></script>

@@ -60,6 +60,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Page Routes
 app.get('/', getTodos)
+app.get('/category/:slug', getTodos)
 
 // Handle form data
 app.post('/todo', TodoValidation, handleTodo, getTodos)

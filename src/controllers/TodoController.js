@@ -4,14 +4,14 @@ import Todo from "../models/Todo.js";
 export const createTodo = async (req, res, next) => {
     const errors = validationResult(req);
 
-    if(!errors.isEmpty()) {
+    if (!errors.isEmpty()) {
         req.formErrorFields = {};
         errors.array().forEach(error => {
             req.formErrorFields[error.path] = error.msg;
         });
         return next()
     }
-    
+
     await Todo.query().insert({
         title: req.body.title,
         category_id: parseInt(req.body.category_id) || null,
@@ -19,20 +19,22 @@ export const createTodo = async (req, res, next) => {
     });
     req.body = {}
 
-    return next()
+    return res.redirect(req.headers.referer)
 }
 
 
 export const updateTodo = async (req, res, next) => {
     const errors = validationResult(req);
 
-    if(!errors.isEmpty()) {
+    if (!errors.isEmpty()) {
         req.todoError = {};
         req.todoError.message = errors.errors[0].msg
         req.todoError.todoId = req.body.id
         req.todoError.value = req.body.title
 
+        const activeCategory = req.body.activeCategory
         req.body = {}
+        req.body.activeCategory = activeCategory
 
         return next()
     }
@@ -43,10 +45,10 @@ export const updateTodo = async (req, res, next) => {
         is_completed: req.body.is_completed === "true" ? true : false
     }
     await Todo.query().patchAndFetchById(req.body.id, todo);
-    
+
     req.body = {}
-    
-    return next()
+
+    return res.redirect(req.headers.referer)
 }
 
 
@@ -56,8 +58,8 @@ export const deleteTodo = async (req, res, next) => {
         return res.status(404).json({ message: `Todo with id: ${req.body.id} not found` })
     }
     await Todo.query().deleteById(req.body.id);
-    
-    return next()
+
+    return res.redirect(req.headers.referer)
 }
 
 
