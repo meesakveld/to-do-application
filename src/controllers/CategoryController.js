@@ -17,19 +17,19 @@ export const createCategory = async (req, res, next) => {
     });
     req.body = {}
 
-    return next()
+    return res.redirect(req.headers.referer);
 }
 
 export const deleteCategory = async (req, res, next) => {
     const category = await Category.query().findById(req.body.id)
     if (!category) {
-        return res.status(404).json({ message: `Todo with id: ${req.body.id} not found` })
+        return res.status(404).json({ message: `Category with id: ${req.body.id} not found` })
     }
     
     await Category.query().deleteById(req.body.id);
     req.body = {}
     
-    return next()
+    return res.redirect(req.headers.referer);
 }
 
 export const handleCategory = async (req, res, next) => {

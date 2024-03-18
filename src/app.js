@@ -61,7 +61,7 @@ app.get('/category/:slug', getTodos)
 
 // Handle form data
 app.post('/todo', TodoValidation, handleTodo, getTodos)
-app.post('/category', CategoryValidation, handleCategory, getTodos)
+app.post('/category', CategoryValidation, handleCategory)
 
 // API Routes
 app.use('/api', apiRoutes)
