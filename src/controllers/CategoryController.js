@@ -1,4 +1,5 @@
 import { validationResult } from "express-validator";
+import MailTransporter from "../lib/MailTransporter.js";
 import Category from "../models/Category.js";
 
 export const createCategory = async (req, res, next) => {
@@ -15,6 +16,22 @@ export const createCategory = async (req, res, next) => {
     await Category.query().insert({
         name: req.body.name,
     });
+
+    try {
+        await MailTransporter.sendMail({
+            from: "noreply@just-do-it.com",
+            to: "hello@meesakveld.be",
+            subject: "Category succesfully added!",
+            template: "succesfullyAdded",
+            context: {
+                item: "Category",
+                value: req.body.name
+            },
+        });
+    } catch (error) {
+        console.error(error);
+    }
+
     req.body = {}
 
     return res.redirect(req.headers.referer);

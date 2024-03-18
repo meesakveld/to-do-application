@@ -1,6 +1,7 @@
 import { validationResult } from "express-validator";
 import MailTransporter from "../lib/MailTransporter.js";
 import Todo from "../models/Todo.js";
+import Category from "../models/Category.js";
 
 export const createTodo = async (req, res, next) => {
     const errors = validationResult(req);
@@ -20,14 +21,16 @@ export const createTodo = async (req, res, next) => {
     });
 
     try {
-        MailTransporter.sendMail({
+        const category = await Category.query().where('id', '=', parseInt(req.body.category_id)).first();
+        const categoryName = category ? category.name : null;
+        await MailTransporter.sendMail({
             from: "noreply@just-do-it.com",
             to: "hello@meesakveld.be",
             subject: "Todo succesfully added!",
             template: "succesfullyAdded",
             context: {
                 item: "Todo",
-                value: req.body.title
+                value: `${req.body.title}${categoryName ? ` | ${categoryName}` : ""}`
             },
         });
     } catch (error) {
