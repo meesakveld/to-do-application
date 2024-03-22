@@ -1,0 +1,16 @@
+<main>
+    <section class="authentication">
+        <h2>Login</h2>
+        {{#if flash}}
+            <div class="flash">{{flash}}</div>
+        {{/if}}
+        <form action="/login" method="POST">
+            <input type="hidden" name="method" value="POST">
+            {{#each inputs}}
+                {{>form-input this}}
+            {{/each}}
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account yet? <a href="/register">Register here</a></p>
+    </section>
+</main>

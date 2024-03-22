@@ -1,5 +1,7 @@
+import handlebarsHelpers from "handlebars-helpers";
+const handyHelpers = handlebarsHelpers();
 
-export default {
+const myHelpers =  {
     filterTodosByStatus: (todos, param) => {
         if(param.hash.isChecked) {
             return todos.filter(todo => todo.is_completed);
@@ -8,7 +10,7 @@ export default {
         }
     },
     ifEquals: (arg1, arg2, options) => {
-        return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
+        return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
     },
     toLowerCase: (str) => {
         return str.toLowerCase();
@@ -23,3 +25,5 @@ export default {
         return "";
     },
 }
+
+export default { ...handyHelpers, ...myHelpers };

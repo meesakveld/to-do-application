@@ -25,8 +25,7 @@ export default [
         .isEmail()
         .withMessage("Vul een geldig e-mail adres in"),
     
-    body("password").notEmpty().withMessage("Wachtwoord is verplicht")
-        .bail()
-        .isStrongPassword()
-        .withMessage("Wachtwoord moet minstens 8 tekens lang zijn en minstens 1 letter, 1 cijfer en 1 speciaal karakter bevatten"),
+    body("password")
+        .notEmpty()
+        .withMessage("Wachtwoord is verplicht"),
 ];

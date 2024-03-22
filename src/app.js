@@ -9,15 +9,21 @@ import { create } from "express-handlebars";
 import bodyParser from "body-parser";
 import handlebarsHelpers from "./lib/handlebarsHelpers.js";
 import { PORT } from "./consts.js";
+import cookieParser from "cookie-parser";
 
 // Midleware
 import TodoValidation from "./middleware/validation/TodoValidation.js";
 import CategoryValidation from "./middleware/validation/CategoryValidation.js";
+import AuthRegisterValidation from "./middleware/validation/AuthRegisterValidation.js";
+import AuthLoginValidation from "./middleware/validation/AuthLoginValidation.js";
+
+import jwtAuth from "./middleware/jwtAuth.js";
 
 // Controllers
 import { getTodos } from "./controllers/PageController.js"
 import { handleTodo } from "./controllers/TodoController.js";
 import { handleCategory } from "./controllers/CategoryController.js";
+import * as AuthController from "./controllers/AuthController.js";
 
 // Helpers
 import path from "path";
@@ -32,6 +38,9 @@ import apiRoutes from "./routes/api/index.js";
 */
 
 const app = express()
+
+// make use of the cookie parser 🍪 middleware
+app.use(cookieParser());
 
 // Handlebars setup
 const hbs = create({
@@ -55,14 +64,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
  * ------------------------------
 */
 
+// Auth routes
+app.get("/login", AuthController.login);
+app.post("/login", AuthLoginValidation, AuthController.postLogin, AuthController.login);
+
+app.get("/register", AuthController.register);
+app.post("/register", AuthRegisterValidation, AuthController.postRegister, AuthController.register);	
+
+app.get("/logout", AuthController.logout);
+
 // Page Routes
-app.get('/', getTodos)
-app.get('/category/:slug', getTodos)
-app.get('/login', (req, res) => { res.json({ message: 'Login page' })})
+app.get('/', jwtAuth, getTodos)
+app.get('/category/:slug', jwtAuth, getTodos)
 
 // Handle form data
-app.post('/todo', TodoValidation, handleTodo, getTodos)
-app.post('/category', CategoryValidation, handleCategory)
+app.post('/todo', jwtAuth, TodoValidation, handleTodo, getTodos)
+app.post('/category', jwtAuth, CategoryValidation, handleCategory)
 
 // API Routes
 app.use('/api', apiRoutes)
