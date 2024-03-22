@@ -1,15 +1,14 @@
 import knex from "../lib/Knex.js";
 import { Model } from "objection";
 import Todo from "./Todo.js";
-import User from "./User.js";
 
 // instantiate the model
 Model.knex(knex);
 
 // define the model
-class Category extends Model { //! Change the name of the class to the name of the table you want to link
+class User extends Model { //! Change the name of the class to the name of the table you want to link
     static get tableName() {
-        return "categories"; //! Change the name of the table you want to link
+        return "users"; //! Change the name of the table you want to link
     }
 
     static get idColumn() {
@@ -19,10 +18,13 @@ class Category extends Model { //! Change the name of the class to the name of t
     static get jsonSchema() { //! Update the jsonSchema to match the table you want to link
         return {
             type: "object",
-            required: ["name"],
+            required: ["email", "password", "firstname", "lastname"],
             properties: {
                 id: { type: "integer" },
-                name: { type: "string", minLength: 1, maxLength: 255 },
+                email: { type: "string", minLength: 1, maxLength: 255 },
+                password: { type: "string", minLength: 1, maxLength: 255 },
+                firstname: { type: "string", minLength: 1, maxLength: 255 },
+                lastname: { type: "string", minLength: 1, maxLength: 255 },
                 created_at: { type: "string" },
                 updated_at: { type: "string" }
             },
@@ -35,21 +37,20 @@ class Category extends Model { //! Change the name of the class to the name of t
                 relation: Model.HasManyRelation,
                 modelClass: Todo,
                 join: {
-                    from: "categories.id",
-                    to: "todos.category_id"
+                    from: "users.id",
+                    to: "todos.user_id"
                 }
             },
-            user: {
-                relation: Model.BelongsToOneRelation,
-                modelClass: User,
+            categories: {
+                relation: Model.HasManyRelation,
+                modelClass: Category,
                 join: {
-                    from: "categories.user_id",
-                    to: "users.id"
+                    from: "users.id",
+                    to: "categories.user_id"
                 }
             }
         }
     }
-
 }
 
 export default Category; //! Change the name of the class to the name of the table you want to link

@@ -1,6 +1,7 @@
 import knex from "../lib/Knex.js";
 import { Model } from "objection";
 import Category from "./Category.js";
+import User from "./User.js";
 
 
 // instantiate the model
@@ -39,6 +40,14 @@ class Todo extends Model { //! Change the name of the class to the name of the t
                 join: {
                     from: "todos.category_id",
                     to: "categories.id"
+                }
+            },
+            user: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: User,
+                join: {
+                    from: "todos.user_id",
+                    to: "users.id"
                 }
             }
         }
