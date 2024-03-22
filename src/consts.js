@@ -13,3 +13,5 @@ export const PORT = process.env.PORT || 3000;
 export const DATABASE_TYPE = process.env.DATABASE_TYPE;
 export const DATABASE_NAME = process.env.DATABASE_NAME;
 export const NODE_ENV = process.env.NODE_ENV;
+
+export const TOKEN_SALT = process.env.TOKEN_SALT;

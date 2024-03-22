@@ -58,6 +58,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Page Routes
 app.get('/', getTodos)
 app.get('/category/:slug', getTodos)
+app.get('/login', (req, res) => { res.json({ message: 'Login page' })})
 
 // Handle form data
 app.post('/todo', TodoValidation, handleTodo, getTodos)
