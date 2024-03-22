@@ -1,6 +1,7 @@
 import knex from "../lib/Knex.js";
 import { Model } from "objection";
 import Todo from "./Todo.js";
+import Category from "./Category.js";
 
 // instantiate the model
 Model.knex(knex);
@@ -53,4 +54,4 @@ class User extends Model { //! Change the name of the class to the name of the t
     }
 }
 
-export default Category; //! Change the name of the class to the name of the table you want to link
+export default User; //! Change the name of the class to the name of the table you want to link

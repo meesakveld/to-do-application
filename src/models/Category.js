@@ -19,10 +19,11 @@ class Category extends Model { //! Change the name of the class to the name of t
     static get jsonSchema() { //! Update the jsonSchema to match the table you want to link
         return {
             type: "object",
-            required: ["name"],
+            required: ["name", "user_id"],
             properties: {
                 id: { type: "integer" },
                 name: { type: "string", minLength: 1, maxLength: 255 },
+                user_id: { type: "integer" },
                 created_at: { type: "string" },
                 updated_at: { type: "string" }
             },
