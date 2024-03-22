@@ -14,10 +14,13 @@ export const createTodo = async (req, res, next) => {
         return next()
     }
 
+    const user = req.user;
+
     await Todo.query().insert({
         title: req.body.title,
         category_id: parseInt(req.body.category_id) || null,
-        is_completed: false
+        is_completed: false,
+        user_id: user.id
     });
 
     try {
@@ -25,7 +28,7 @@ export const createTodo = async (req, res, next) => {
         const categoryName = category ? category.name : null;
         await MailTransporter.sendMail({
             from: "noreply@just-do-it.com",
-            to: "hello@meesakveld.be",
+            to: user.email,
             subject: "Todo succesfully added!",
             template: "succesfullyAdded",
             context: {
@@ -59,12 +62,15 @@ export const updateTodo = async (req, res, next) => {
         return next()
     }
 
+    const user = req.user;
+
     const todo = {
         title: req.body.title,
         category_id: req.body.category_id ? parseInt(req.body.category_id) : null,
-        is_completed: req.body.is_completed === "true" ? true : false
+        is_completed: req.body.is_completed === "true" ? true : false,
+        user_id: user.id
     }
-    await Todo.query().patchAndFetchById(req.body.id, todo);
+    await Todo.query().where('user_id', "=", user.id).patchAndFetchById(req.body.id, todo);
 
     req.body = {}
 
@@ -77,7 +83,9 @@ export const deleteTodo = async (req, res, next) => {
     if (!todo) {
         return res.status(404).json({ message: `Todo with id: ${req.body.id} not found` })
     }
-    await Todo.query().deleteById(req.body.id);
+
+    const user = req.user;
+    await Todo.query().where('user_id', "=", user.id).deleteById(req.body.id);
 
     return res.redirect(req.headers.referer)
 }

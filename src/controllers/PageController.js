@@ -6,8 +6,10 @@ import Category from '../models/Category.js';
  * Retrieves todos based on the specified category and renders the home view.
 */
 export const getTodos = async (req, res) => {
+    const userId = req.user.id;
+
     // Get all categories and set the active category
-    const categories = await Category.query();
+    const categories = await Category.query().where('user_id', "=", userId);
 
     let activeCategory;
     if(req.params.slug) {
@@ -24,7 +26,7 @@ export const getTodos = async (req, res) => {
 
     // Get all todos
     const active_category_id = activeCategory ? categories.find(category => category.name.toLowerCase() === activeCategory)?.id : null;
-    let todos = active_category_id ? await Todo.query().where('category_id', "=", active_category_id).withGraphFetched('category') : await Todo.query().withGraphFetched('category');
+    let todos = active_category_id ? await Todo.query().where('user_id', "=", userId).where('category_id', "=", active_category_id).withGraphFetched('category') : await Todo.query().where('user_id', "=", userId).withGraphFetched('category');
     todos.forEach(todo => todo.categories = categories);
     todos.forEach(todo => {
         if (todo.id === parseInt(req.todoError?.todoId)) {

@@ -13,14 +13,17 @@ export const createCategory = async (req, res, next) => {
         return next()
     }
     
+    const user = req.user;
+
     await Category.query().insert({
         name: req.body.name,
+        user_id: user.id
     });
 
     try {
         await MailTransporter.sendMail({
             from: "noreply@just-do-it.com",
-            to: "hello@meesakveld.be",
+            to: user.email,
             subject: "Category succesfully added!",
             template: "succesfullyAdded",
             context: {
@@ -38,12 +41,14 @@ export const createCategory = async (req, res, next) => {
 }
 
 export const deleteCategory = async (req, res, next) => {
-    const category = await Category.query().findById(req.body.id)
+    const user = req.user;
+
+    const category = await Category.query().where("user_id", "=", user.id).findById(req.body.id)
     if (!category) {
         return res.status(404).json({ message: `Category with id: ${req.body.id} not found` })
     }
     
-    await Category.query().deleteById(req.body.id);
+    await Category.query().where("user_id", "=", user.id).deleteById(req.body.id);
     req.body = {}
     
     return res.redirect(req.headers.referer);
