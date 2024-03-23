@@ -1,6 +1,6 @@
 import Todo from '../models/Todo.js';
 import Category from '../models/Category.js';
-
+import * as helpers from '../helpers/index.js';
 
 /**
  * Retrieves todos based on the specified category and renders the home view.
@@ -48,6 +48,9 @@ export const getTodos = async (req, res) => {
             err: req.formErrorFields?.title || ""
         },
     }
+
+    // Generate a QR code for the todos
+    data.qrCode = await helpers.generateQrCodeForTodos(todos);
 
     // Render the home view
     return res.render("home", data);

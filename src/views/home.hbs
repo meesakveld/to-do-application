@@ -15,14 +15,14 @@
         <ul>
             <li class="{{#unless (checkForActiveCategories categories)}}active{{/unless}}"><a href="/">All</a></li>
             {{#each categories}}
-                <li class="{{#if isActive}}active{{/if}}">
-                    <a href="/category/{{#toLowerCase name}}{{/toLowerCase}}">{{name}}</a>
-                    <form action="/category" method="POST">
-                        <input type="hidden" name="method" value="DELETE">
-                        <input type="hidden" name="id" value="{{id}}">
-                        <button type="submit">x</button>
-                    </form>
-                </li>
+            <li class="{{#if isActive}}active{{/if}}">
+                <a href="/category/{{#toLowerCase name}}{{/toLowerCase}}">{{name}}</a>
+                <form action="/category" method="POST">
+                    <input type="hidden" name="method" value="DELETE">
+                    <input type="hidden" name="id" value="{{id}}">
+                    <button type="submit">x</button>
+                </form>
+            </li>
             {{/each}}
         </ul>
         <form action="/category" class="add_category" method="POST">
@@ -33,19 +33,30 @@
 
     <div class="content">
         <article class="todos--unchecked__container">
-            <h2>We've got things to do!</h2>
+            <div class="title">
+                <h2>We've got things to do!</h2>
+                <button class="share_btn"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="33.877">
+                        <g fill="#fff">
+                            <path
+                                d="M22.09 13.574v12.764c0 2.49-1.27 3.77-3.799 3.77H3.799c-2.52 0-3.799-1.27-3.799-3.77V13.574c0-2.5 1.28-3.76 3.799-3.76H7.86v1.729H3.838c-1.367 0-2.11.723-2.11 2.12V26.25c0 1.396.743 2.12 2.11 2.12h14.414c1.338 0 2.11-.724 2.11-2.12V13.662c0-1.396-.772-2.119-2.11-2.119h-4.023V9.814h4.062c2.53 0 3.799 1.27 3.799 3.76Z" />
+                            <path
+                                d="M11.045 20.342c.459 0 .86-.381.86-.84V6.172l-.07-1.856 1.026 1.065 2.051 2.148c.156.176.381.264.586.264.45 0 .791-.322.791-.762 0-.224-.098-.4-.254-.566L11.67 2.217c-.215-.215-.41-.283-.625-.283-.215 0-.41.068-.625.283L6.055 6.465c-.166.166-.254.342-.254.566 0 .44.322.762.771.762.205 0 .44-.088.596-.264l2.06-2.148 1.026-1.065-.069 1.856v13.33c0 .459.4.84.86.84Z" />
+                        </g>
+                    </svg></button>
+            </div>
             <form class="add-todo" action="/todo" method="POST">
                 <input type="hidden" name="method" value="POST">
                 <div class="add-todo__inputs">
                     <div class="add-todo__inputField">
                         <input type="hidden" name="activeCategory" value="{{ findActiveCategory categories }}">
-                        <input required name="title" type="text" placeholder="What is your task?" value="{{input.title}}">
+                        <input required name="title" type="text" placeholder="What is your task?"
+                            value="{{input.title}}">
                         <p>{{input.err}}</p>
                     </div>
                     <select name="category_id" class="category">
                         <option value="">Choose a category</option>
                         {{#each categories}}
-                            <option {{#if isActive}}selected{{/if}} value="{{id}}">{{name}}</option>
+                        <option {{#if isActive}}selected{{/if}} value="{{id}}">{{name}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -53,27 +64,53 @@
             </form>
 
             {{#if (filterTodosByStatus todos isChecked=false)}}
-                    <ul class="todos--unchecked">
-                        {{#each (filterTodosByStatus todos isChecked=false)}}
-                            {{> todo this}}
-                        {{/each}}
-                    </ul>
-                </article>
-            {{/if}}
+            <ul class="todos--unchecked">
+                {{#each (filterTodosByStatus todos isChecked=false)}}
+                {{> todo this}}
+                {{/each}}
+            </ul>
+        </article>
+        {{/if}}
         </article>
 
         {{#if (filterTodosByStatus todos isChecked=true)}}
-            <article class="todos-checked__container">
-                <h2>Things you've done!</h2>
-                <ul class="todos-checked">
-                    {{#each (filterTodosByStatus todos isChecked=true)}}
-                        {{> todo this}}
-                    {{/each}}
-                </ul>
-            </article>  
+        <article class="todos-checked__container">
+            <h2>Things you've done!</h2>
+            <ul class="todos-checked">
+                {{#each (filterTodosByStatus todos isChecked=true)}}
+                {{> todo this}}
+                {{/each}}
+            </ul>
+        </article>
         {{/if}}
+
+        <section class="share hidden">
+            <div class="share_close_area"></div>
+            <div class="share_container">
+                <h2>Share your list</h2>
+                <div class="share_options">
+                    <div class="qr">
+                        <h3>QR Code</h3>
+                        <p>Scan the QR code to share your list.</p>
+                        <img src="{{qrCode}}" alt="QR code">
+                    </div>
+                    <div class="email">
+                        <h3>Email</h3>
+                        <p>Send your list to someone by email.</p>
+                        <form action="/share" method="POST">
+                            <input type="email" name="email" placeholder="Email">
+                            <input type="hidden" name="category" value="{{ findActiveCategory categories }}">
+                            <button type="submit">Send</button>
+                            <p>{{status}}</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </div>
 
 </main>
 
 <script src="/scripts/editTodo.js"></script>
+<script src="/scripts/share.js"></script>
