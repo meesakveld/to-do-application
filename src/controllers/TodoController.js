@@ -137,8 +137,4 @@ export const handleTodo = async (req, res, next) => {
         deleteTodo(req, res, next);
     }
 
-    if (method === "MAIL") {
-        mailAllTodos(req, res, next);
-    }
-
 }
