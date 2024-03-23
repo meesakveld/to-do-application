@@ -5,12 +5,13 @@ import Todo from '../../models/Todo.js'
  * @api {get} /api/todos Get all todos
  */
 export const getTodos = async (req, res, next) => {
-    const todos = await Todo.query()
+    const todos = await Todo.query().where('user_id', "=", req.user.id)
     if (!todos) {
         return res.status(404).json({ message: `No todos found` })
     }
     res.json(todos)
 }
+
 
 /**
  * @api {get} /api/todos Get all todos with pagination
@@ -21,7 +22,7 @@ export const getTodos = async (req, res, next) => {
  * @api {get} /api/todos/:id Get a single todo
  */
 export const getTodo = async (req, res, next) => {
-    const todo = await Todo.query().findById(req.params.id)
+    const todo = await Todo.query().where('user_id', "=", req.user.id).findById(req.params.id)
     if (!todo) {
         return res.status(404).json({ message: `Todo with id: ${req.params.id} not found` })
     }
@@ -46,11 +47,13 @@ export const createTodo = async (req, res, next) => {
     const user = await Todo.query().insert({
         title,
         category_id,
-        is_completed
+        is_completed,
+        user_id: req.user.id
     });
 
     res.status(201).json(user);
 }
+
 
 /**
  * @api {patch} /api/todos/:id Update a todo
@@ -62,13 +65,13 @@ export const updateTodo = async (req, res, next) => {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const todo = await Todo.query().findById(req.params.id)
+    const todo = await Todo.query().where('user_id', "=", req.user.id).findById(req.params.id)
     if (!todo) {
         return res.status(404).json({ message: `Todo with id: ${req.params.id} not found` })
     }
 
     const body = req.body;
-    const updatedTodo = await Todo.query().patchAndFetchById(req.params.id, body);
+    const updatedTodo = await Todo.query().where('user_id', "=", req.user.id).patchAndFetchById(req.params.id, body);
     res.json(updatedTodo);
 }
 
@@ -77,10 +80,10 @@ export const updateTodo = async (req, res, next) => {
  * @api {delete} /api/todos/:id Delete a todo
  */
 export const deleteTodo = async (req, res, next) => {
-    const todo = await Todo.query().findById(req.params.id)
+    const todo = await Todo.query().where('user_id', "=", req.user.id).findById(req.params.id)
     if (!todo) {
         return res.status(404).json({ message: `Todo with id: ${req.params.id} not found` })
     }
-    await Todo.query().deleteById(req.params.id);
+    await Todo.query().where('user_id', "=", req.user.id).deleteById(req.params.id);
     res.json({ message: `Todo with id: ${req.params.id} deleted` })
 }

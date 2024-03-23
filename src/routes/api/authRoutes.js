@@ -7,12 +7,10 @@
 import Express from "express";
 
 // Controllers
-import todoRoutes from "./todoRoutes.js";
-import categoryRoutes from "./categoryRoutes.js";
-import authRoutes from "./authRoutes.js";
+import { getUserToken } from "../../controllers/api/AuthController.js";
 
 // Middleware
-import { checkUserToken } from "../../controllers/api/AuthController.js";
+import AuthLoginValidation from "../../middleware/validation/AuthLoginValidation.js";
 
 /**
  * ------------------------------
@@ -29,8 +27,7 @@ const router = Express.Router();
  * ------------------------------
 */
 
-router.use('/todo', checkUserToken, todoRoutes)
-router.use('/category', checkUserToken, categoryRoutes)
-router.use('/auth', authRoutes)
+router.get('/login', AuthLoginValidation, getUserToken)
+
 
 export default router;

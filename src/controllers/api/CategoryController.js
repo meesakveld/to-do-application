@@ -5,7 +5,7 @@ import Category from '../../models/Category.js'
  * @api {get} /api/categories Get all categories
  */
 export const getCategories = async (req, res, next) => {
-    const categories = await Category.query()
+    const categories = await Category.query().where('user_id', "=", req.user.id)
     if (!categories) {
         return res.status(404).json({ message: `No categories found` })
     }
@@ -17,7 +17,7 @@ export const getCategories = async (req, res, next) => {
  * @api {get} /api/categories/:id Get a single category
  */
 export const getCategory = async (req, res, next) => {
-    const category = await Category.query().findById(req.params.id)
+    const category = await Category.query().where('user_id', "=", req.user.id).findById(req.params.id)
     if (!category) {
         return res.status(404).json({ message: `Category with id: ${req.params.id} not found` })
     }
@@ -37,7 +37,8 @@ export const createCategory = async (req, res, next) => {
 
     const name = req.body.name;
     const category = await Category.query().insert({
-        name
+        name,
+        user_id: req.user.id
     });
     res.status(201).json(category);
 }
@@ -53,12 +54,12 @@ export const updateCategory = async (req, res, next) => {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const category = await Category.query().findById(req.params.id)
+    const category = await Category.query().where('user_id', "=", req.user.id).findById(req.params.id)
     if (!category) {
         return res.status(404).json({ message: `Category with id: ${req.params.id} not found` })
     }
     const body = req.body;
-    const updatedCategory = await Category.query().patchAndFetchById(req.params.id, body);
+    const updatedCategory = await Category.query().where('user_id', "=", req.user.id).patchAndFetchById(req.params.id, body);
     res.json(updatedCategory);
 }
 
@@ -67,10 +68,10 @@ export const updateCategory = async (req, res, next) => {
  * @api {delete} /api/categories/:id Delete a category
  */
 export const deleteCategory = async (req, res, next) => {
-    const category = await Category.query().findById(req.params.id)
+    const category = await Category.query().where('user_id', "=", req.user.id).findById(req.params.id)
     if (!category) {
         return res.status(404).json({ message: `Category with id: ${req.params.id} not found` })
     }
-    await Category.query().deleteById(req.params.id);
+    await Category.query().where('user_id', "=", req.user.id).deleteById(req.params.id);
     res.send({ message: `Category with id: ${req.params.id} deleted`})
 }
