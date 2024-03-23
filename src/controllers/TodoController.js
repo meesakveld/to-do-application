@@ -101,7 +101,7 @@ export const mailAllTodos = async (req, res, next) => {
         return next()
     }
 
-    const category = await Category.query().where('user_id', "=", req.user.id).whereRaw('LOWER(name) = ?', req.body.category).first();
+    const category = await Category.query().where('user_id', "=", req.user.id).whereRaw('LOWER(name) = ?', req.body.activeCategory).first();
     const todos = category ? await Todo.query().where('user_id', "=", req.user.id).where('category_id', "=", category.id).withGraphFetched("category") : await Todo.query().where('user_id', "=", req.user.id).withGraphFetched("category");
     const mail = req.body.email;
 

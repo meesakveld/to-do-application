@@ -99,7 +99,7 @@
                         <p>Send your list to someone by email.</p>
                         <form action="/share" method="POST">
                             <input type="email" name="email" placeholder="Email" {{#if emailErrorMessage}}value="{{emailErrorMessage.value}}"{{/if}}>
-                            <input type="hidden" name="category" value="{{ findActiveCategory categories }}">
+                            <input type="hidden" name="activeCategory" value="{{ findActiveCategory categories }}">
                             <p class="error">{{emailErrorMessage.message}}</p>
                             <button type="submit">Send</button>
                         </form>
