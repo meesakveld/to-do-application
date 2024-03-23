@@ -92,7 +92,17 @@ export const deleteTodo = async (req, res, next) => {
 
 
 export const mailAllTodos = async (req, res, next) => {
-    const todos = await Todo.query().withGraphFetched('category');
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        req.emailErrorMessage = {};
+        req.emailErrorMessage.message = errors.errors[0].msg
+        req.emailErrorMessage.value = req.body.email
+        return next()
+    }
+
+    const category = await Category.query().where('user_id', "=", req.user.id).whereRaw('LOWER(name) = ?', req.body.category).first();
+    const todos = category ? await Todo.query().where('user_id', "=", req.user.id).where('category_id', "=", category.id).withGraphFetched("category") : await Todo.query().where('user_id', "=", req.user.id).withGraphFetched("category");
     const mail = req.body.email;
 
     try {
@@ -102,7 +112,8 @@ export const mailAllTodos = async (req, res, next) => {
             subject: "List of all todos!",
             template: "allTodos",
             context: {
-                todos: todos
+                todosCompleted: todos.filter(todo => todo.is_completed),
+                todosNotCompleted: todos.filter(todo => !todo.is_completed),
             },
         });
     } catch (error) {

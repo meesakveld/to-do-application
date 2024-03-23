@@ -84,7 +84,7 @@
         </article>
         {{/if}}
 
-        <section class="share hidden">
+        <section class="share {{#unless emailErrorMessage}}hidden{{/unless}}">
             <div class="share_close_area"></div>
             <div class="share_container">
                 <h2>Share your list</h2>
@@ -98,10 +98,10 @@
                         <h3>Email</h3>
                         <p>Send your list to someone by email.</p>
                         <form action="/share" method="POST">
-                            <input type="email" name="email" placeholder="Email">
+                            <input type="email" name="email" placeholder="Email" {{#if emailErrorMessage}}value="{{emailErrorMessage.value}}"{{/if}}>
                             <input type="hidden" name="category" value="{{ findActiveCategory categories }}">
+                            <p class="error">{{emailErrorMessage.message}}</p>
                             <button type="submit">Send</button>
-                            <p>{{status}}</p>
                         </form>
                     </div>
                 </div>

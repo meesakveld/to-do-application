@@ -6,8 +6,16 @@
 </div>
 <hr>
 <div class="mail-body">
-    <h2 style="color: rgb(67, 95, 121); text-transform: capitalize;">Todos:</h2>
-    {{#each todos as |todo|}}
-        <p style="padding: 1rem; background-color: rgb(80, 112, 141, 0.1); font-weight:">{{ todo }}{{ category ? ` | ${category.name}` : '' }}</p>
-    {{/each }}
+    <div style="margin-bottom: 2rem;">
+        <h2 style="color: rgb(67, 95, 121); text-transform: capitalize; margin-bottom:">Todos:</h2>
+        {{#each todosNotCompleted as |todo|}}
+            <p style="padding: 1rem; background-color: rgb(80, 112, 141, 0.1);">{{ todo.title }}{{#if todo.category}} | {{todo.category.name}}{{/if}}</p>
+        {{/each }}
+    </div>
+    <div style="margin-bottom: 2rem;">
+        <h2 style="color: rgb(67, 95, 121); text-transform: capitalize; margin-bottom:">Completed todos:</h2>
+        {{#each todosCompleted as |todo|}}
+            <p style="padding: 1rem; background-color: rgb(80, 112, 141, 0.1);">{{ todo.title }}{{#if todo.category}} | {{todo.category.name}}{{/if}}</p>
+        {{/each }}
+    </div>
 </div>

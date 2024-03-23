@@ -16,12 +16,13 @@ import TodoValidation from "./middleware/validation/TodoValidation.js";
 import CategoryValidation from "./middleware/validation/CategoryValidation.js";
 import AuthRegisterValidation from "./middleware/validation/AuthRegisterValidation.js";
 import AuthLoginValidation from "./middleware/validation/AuthLoginValidation.js";
+import ShareWithEmailValidation from "./middleware/validation/ShareWithEmailValidation.js";
 
 import jwtAuth from "./middleware/jwtAuth.js";
 
 // Controllers
 import { getTodos } from "./controllers/PageController.js"
-import { handleTodo } from "./controllers/TodoController.js";
+import { handleTodo, mailAllTodos } from "./controllers/TodoController.js";
 import { handleCategory } from "./controllers/CategoryController.js";
 import * as AuthController from "./controllers/AuthController.js";
 
@@ -80,6 +81,9 @@ app.get('/category/:slug', jwtAuth, getTodos)
 // Handle form data
 app.post('/todo', jwtAuth, TodoValidation, handleTodo, getTodos)
 app.post('/category', jwtAuth, CategoryValidation, handleCategory)
+
+// Send mail with all todos
+app.post('/share', jwtAuth, ShareWithEmailValidation, mailAllTodos, getTodos)
 
 // API Routes
 app.use('/api', apiRoutes)

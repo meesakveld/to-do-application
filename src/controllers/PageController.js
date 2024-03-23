@@ -47,6 +47,7 @@ export const getTodos = async (req, res) => {
             category_id: req.body.category_id || "",
             err: req.formErrorFields?.title || ""
         },
+        emailErrorMessage: req.emailErrorMessage
     }
 
     // Generate a QR code for the todos

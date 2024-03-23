@@ -342,6 +342,7 @@ main {
             & .email {
                 display: flex;
                 gap: 0.5rem;
+                
 
                 & form {
                     display: flex;
@@ -360,6 +361,11 @@ main {
                     & button {
                         background-color: #6438c6;
                     }
+                }
+
+                & .error {
+                    color: rgb(255, 0, 0);
+                    font-size: 0.8rem;
                 }
 
             }
