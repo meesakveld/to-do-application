@@ -15,3 +15,6 @@ export const DATABASE_NAME = process.env.DATABASE_NAME;
 export const NODE_ENV = process.env.NODE_ENV;
 
 export const TOKEN_SALT = process.env.TOKEN_SALT;
+
+export const MAIL_USER = process.env.MAIL_USER;
+export const MAIL_PASS = process.env.MAIL_PASS;

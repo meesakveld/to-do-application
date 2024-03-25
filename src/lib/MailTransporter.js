@@ -1,9 +1,7 @@
 import nodemailer from "nodemailer";
-import dotenv from "dotenv";
-dotenv.config();
 
 import path from "path";
-import { VIEWS_PATH } from "../consts.js";
+import { VIEWS_PATH, MAIL_USER, MAIL_PASS } from "../consts.js";
 
 import hbs from "nodemailer-express-handlebars";
 
@@ -11,8 +9,8 @@ const transporter = nodemailer.createTransport({
     host: 'localhost',
     port: 1025,
     auth: {
-        user: 'project.2',
-        pass: 'secret.2'
+        user: MAIL_USER,
+        pass: MAIL_PASS
     }
 });
 

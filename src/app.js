@@ -11,7 +11,7 @@ import handlebarsHelpers from "./lib/handlebarsHelpers.js";
 import { PORT } from "./consts.js";
 import cookieParser from "cookie-parser";
 
-// Midleware
+// Middleware
 import TodoValidation from "./middleware/validation/TodoValidation.js";
 import CategoryValidation from "./middleware/validation/CategoryValidation.js";
 import AuthRegisterValidation from "./middleware/validation/AuthRegisterValidation.js";
