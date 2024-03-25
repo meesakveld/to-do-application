@@ -2,7 +2,7 @@
  * ------------------------------
  *            IMPORTS
  * ------------------------------
- */
+*/
 
 import express from "express";
 import { create } from "express-handlebars";
