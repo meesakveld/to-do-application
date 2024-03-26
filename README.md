@@ -22,6 +22,8 @@ This is a TODO application that allows users to manage their tasks and categorie
 - **Email functionality**: Users can send all their todos via email.
 - **Email notifications**: Users receive email notifications when they add a new todo or category.
 
+<br>
+
 ### API
 - **User authentication**: Users must log in to their account by sending a POST request to `http://localhost:3000/api/auth/login` with their credentials. They will receive a bearer token in the response, which they should include in the headers of subsequent requests.
 - **Todo management**: Users can perform CRUD operations on todos by sending requests to `http://localhost:3000/api/todo`. They can use GET to retrieve all todos, POST to create a new todo, PATCH to update an existing todo, and DELETE to delete a todo.
