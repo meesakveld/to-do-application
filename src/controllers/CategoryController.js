@@ -43,6 +43,14 @@ export const createCategory = async (req, res, next) => {
 export const updateCategory = async (req, res, next) => {
     const user = req.user;
 
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()) {
+        req.categoryFormError = "";
+        req.categoryFormError = errors.array()[0].msg;
+        return next()
+    }
+
     const category = await Category.query().where("user_id", "=", user.id).findById(req.body.id)
     if (!category) {
         req.categoryFormError = "Category update failed! Category not found.";
