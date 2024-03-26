@@ -74,8 +74,40 @@ aside {
     }
 
     ul li {
+
+        max-width: 100%;
         display: flex;
         justify-content: space-between;
+
+        & .edit {
+            display: none;
+        }
+
+        &.editing {
+
+            & a {
+                display: none;
+            }
+
+            & .edit {
+                display: flex;
+                
+                & input {
+                    width: 100%;
+                    background-color: transparent;
+                    color: white;
+                }
+
+            }
+        }
+
+        & div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;      
+            gap: 0.5rem;  
+        }
+
     }
 
     & .top {
@@ -104,7 +136,7 @@ aside {
 }
 
 .content {
-    flex-basis: calc(100vw - 13rem);
+    flex-basis: calc(100vw - 18rem);
     background-color: rgb(69, 69, 69);
     flex-grow: 1;
 
@@ -134,7 +166,7 @@ main {
         flex-direction: row;
 
         aside {
-            flex-basis: 13rem;
+            flex-basis: 18rem;
             border-right: 1px solid gray;
         }
     }
@@ -236,24 +268,25 @@ main {
             display: none;
         }
 
-        &.editing {
+    }
 
-            & .text,
-            .category {
-                display: none;
-            }
+    &.editing {
 
-            & form {
-                display: block;
-                display: flex;
-                gap: 0.5rem;
+        & .todo .text,
+        .category {
+            display: none;
+        }
+
+        & .todo form {
+            display: block;
+            display: flex;
+            gap: 0.5rem;
+            width: 100%;
+
+            & input {
+                flex-grow: 1;
+                border-width: 0.5px;
                 width: 100%;
-
-                & input {
-                    flex-grow: 1;
-                    border-width: 0.5px;
-                    width: 100%;
-                }
             }
         }
     }

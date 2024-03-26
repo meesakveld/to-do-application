@@ -1,17 +1,22 @@
-function updateTodoToEditView() {
-    const $todoItems = document.querySelectorAll('.todo-item');
-    $todoItems.forEach(todoItem => {
-        const $editButton = todoItem.querySelector('.edit button');
-        if (!$editButton) return;
-        $editButton.addEventListener('click', (ev) => {
+function addEditingToClasslist(item, clickedClassname) {
+    const $pressedItems = document.querySelectorAll(item);
+    $pressedItems.forEach($pressedItem => {
+        const $editBtn = $pressedItem.querySelector(clickedClassname)
+        console.log($pressedItem)
+        console.log($editBtn)
+        if (!$editBtn) return;
+        $editBtn.addEventListener('click', (ev) => {
             ev.preventDefault();
-            todoItem.querySelector('.todo').classList.toggle('editing');
+            console.log($pressedItem)
+            $pressedItem.classList.toggle('editing');
         });
     });
+    
 }
 
 function init() {
-    updateTodoToEditView()
+    addEditingToClasslist('.todo-item', '.edit');
+    addEditingToClasslist('.category_item', '.edit_btn')
 }
 
 init()
