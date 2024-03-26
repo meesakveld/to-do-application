@@ -1,15 +1,15 @@
 import { validationResult } from "express-validator";
 import MailTransporter from "../lib/MailTransporter.js";
+
 import Category from "../models/Category.js";
+import Todo from "../models/Todo.js";
 
 export const createCategory = async (req, res, next) => {
     const errors = validationResult(req);
 
     if(!errors.isEmpty()) {
-        req.formErrorFields = {};
-        errors.array().forEach(error => {
-            req.formErrorFields[error.path] = error.msg;
-        });
+        req.categoryFormError = "";
+        req.categoryFormError = errors.array()[0].msg;
         return next()
     }
     
@@ -45,10 +45,16 @@ export const deleteCategory = async (req, res, next) => {
 
     const category = await Category.query().where("user_id", "=", user.id).findById(req.body.id)
     if (!category) {
-        return res.status(404).json({ message: `Category with id: ${req.body.id} not found` })
+        req.categoryFormError = "Category deletion failed! Category not found.";
+        return next()
     }
     
+    // Delete todos of this category
+    await Todo.query().where("category_id", "=", category.id).delete();
+
+    // Delete category
     await Category.query().where("user_id", "=", user.id).deleteById(req.body.id);
+    
     req.body = {}
     
     return res.redirect(req.headers.referer);

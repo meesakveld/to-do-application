@@ -28,6 +28,7 @@
         <form action="/category" class="add_category" method="POST">
             <input type="hidden" name="method" value="POST">
             <input type="text" name="name" placeholder="Add a category">
+            <p class="error">{{ categoryFormError }}</p>
         </form>
     </aside>
 

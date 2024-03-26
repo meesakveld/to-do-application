@@ -40,7 +40,7 @@ import apiRoutes from "./routes/api/index.js";
 
 const app = express()
 
-// make use of the cookie parser 🍪 middleware
+// Make use of the cookie parser 🍪 middleware
 app.use(cookieParser());
 
 // Handlebars setup
@@ -80,13 +80,16 @@ app.get('/category/:slug', jwtAuth, getTodos)
 
 // Handle form data
 app.post('/todo', jwtAuth, TodoValidation, handleTodo, getTodos)
-app.post('/category', jwtAuth, CategoryValidation, handleCategory)
+app.post('/category', jwtAuth, CategoryValidation, handleCategory, getTodos)
 
 // Send mail with all todos
 app.post('/share', jwtAuth, ShareWithEmailValidation, mailAllTodos, getTodos)
 
 // API Routes
 app.use('/api', apiRoutes)
+
+// 404 Page
+app.use('*', jwtAuth, getTodos)
 
 
 /**
