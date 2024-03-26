@@ -11,11 +11,15 @@ export const getTodos = async (req, res) => {
     // Get all categories and set the active category
     const categories = await Category.query().where('user_id', "=", userId);
 
+    // console.log(req.body.activeCategoryId)
+
     let activeCategory;
-    if(req.params.slug) {
+    if (req.params.slug) {
         activeCategory = req.params.slug;
     } else if (req.body.activeCategory) {
         activeCategory = req.body.activeCategory;
+    } else if (req.body.activeCategoryId) {
+        activeCategory = categories.find(category => category.id === parseInt(req.body.activeCategoryId))?.name.toLowerCase();
     }
  
     if (activeCategory) {

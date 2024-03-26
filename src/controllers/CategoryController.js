@@ -40,6 +40,27 @@ export const createCategory = async (req, res, next) => {
     return res.redirect(req.headers.referer);
 }
 
+export const updateCategory = async (req, res, next) => {
+    const user = req.user;
+
+    const category = await Category.query().where("user_id", "=", user.id).findById(req.body.id)
+    if (!category) {
+        req.categoryFormError = "Category update failed! Category not found.";
+        return next()
+    }
+
+    await Category.query().where("user_id", "=", user.id).findById(req.body.id).patch({
+        name: req.body.name
+    });
+
+    const activeCategoryId = req.body.activeCategoryId
+    req.body = {}
+    req.body.activeCategoryId = activeCategoryId
+
+    next()
+
+}
+
 export const deleteCategory = async (req, res, next) => {
     const user = req.user;
 
@@ -65,6 +86,11 @@ export const handleCategory = async (req, res, next) => {
     if (req.body.method === "POST") {
         createCategory(req, res, next);
     }
+
+    if (req.body.method === "PATCH") {
+        updateCategory(req, res, next);
+    }
+
     if (req.body.method === "DELETE") {
         deleteCategory(req, res, next);
     }
