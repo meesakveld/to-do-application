@@ -9,7 +9,13 @@ This is a TODO application that allows users to manage their tasks and categorie
 1. Clone the repository: `git clone https://github.com/pgmgent-pgm-3/opdracht-1-to-do-application-pgm-meesakveld.git`
 2. Install the dependencies: `npm install`
 3. Configure the database via the command `npx knex migrate:latest`
-4. Start the application: `npm run start:dev`
+4. Add the seed data to the database via the command `npx knex seed:run`
+5. Start the application: `npm run start:dev`
+
+### Account credentials
+With this account you can log in to the application and test the features after initializing the database and starting the application.
+- **Email**: `hello@example.com`
+- **Password**: `secret123`
 
 <br>
 
